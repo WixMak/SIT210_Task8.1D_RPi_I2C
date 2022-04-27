@@ -22,11 +22,17 @@ def convertToNumber(data):
 def readLight(addr=DEVICE):
     data = bus.read_i2c_block_data(addr,ONE_TIME_HIGH_RES_MODE_1)
     return convertToNumber(data)
+    
+def lightLevel(lv):
+    if lv > 1000: return 'too bright'
+    elif lv > 500: return 'bright'
+    elif lv > 220: reuturn 'medium'
+    elif lv > 100: return 'dark'
+    else: return 'too dark'
 
 def main():
     while 1:
-        lightLevel=readLight()
-        print("Light Level : ", lightLevel)
+        print("Light Level : ", lightLevel(readLight()))
         time.sleep(0.5)
         
 if __name__=="__main__":
